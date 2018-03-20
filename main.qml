@@ -7,7 +7,7 @@ Window {
     visible: true
     width: 640
     height: 280
-    title: qsTr("Hello World")
+    title: qsTr("BC_Tester")
 
     Button {
         id: button
