@@ -5,25 +5,25 @@ import QtQuick.Controls 2.3
 Window {
     id: window
     visible: true
-    width: 640
+    width: 800
     height: 280
     title: qsTr("BC_Tester")
 
     Button {
         id: button
-        width: 200
-        height: 60
+        width: 120
+        height: 40
         text: qsTr("打开")
         opacity: 0.8
         font.pointSize: 30
-        anchors.topMargin: 30
-        anchors.top: parent.top
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.verticalCenterOffset: parent.height * 0.35
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: parent.width * 0.35
         onClicked: {
             if (button.text == "打开")
             {
                 MainModel.openDevices()
-                text2.text = "12"
                 button.text = "关闭"
             }
             else{
@@ -35,45 +35,23 @@ Window {
 
     Label {
         id: label
-        text: qsTr("距离：")
-        font.pointSize: 30
+        text: qsTr("测量: ")
+        font.bold: true
+        font.pointSize: 100
         fontSizeMode: Text.Fit
-        anchors.horizontalCenterOffset: -100
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenterOffset: parent.width * -0.25
         anchors.verticalCenterOffset: 0
         anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
     }
 
     Text {
         id: text1
         text: MainModel.value
+        font.bold: true
         renderType: Text.NativeRendering
+        anchors.left: label.right
         anchors.verticalCenterOffset: 0
-        anchors.horizontalCenterOffset: 100
         anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.pixelSize: 30
-    }
-
-    Label {
-        id: label1
-        text: qsTr("XX：")
-        font.pointSize: 30
-        fontSizeMode: Text.Fit
-        anchors.horizontalCenterOffset: -100
-        anchors.verticalCenterOffset: 50
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-    Text {
-        id: text2
-        text: ""
-        renderType: Text.NativeRendering
-        anchors.verticalCenterOffset: 50
-        anchors.horizontalCenterOffset: 100
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.pixelSize: 30
-    }
+        font.pixelSize: 100   }
 }
