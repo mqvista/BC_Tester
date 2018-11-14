@@ -12,7 +12,7 @@ QString MainModel::value()
 
 void MainModel::openDevices()
 {
-    BcDevice::Instance()->openFromSerialNum("497713873933", 115200);
+    BcDevice::Instance()->openFromSerialNum("877D469A5451", 115200);
 }
 
 void MainModel::closeDevices()
