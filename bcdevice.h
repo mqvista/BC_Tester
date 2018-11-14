@@ -15,6 +15,7 @@ public:
     void printSerialInfo();
     void open(QString port, quint32 baud);
     Q_INVOKABLE bool openFromSerialNum(QString serialNum, quint32 baud);
+    Q_INVOKABLE bool openFromSerialName(QString serialNum, quint32 baud);
     void close(void);
 
 signals:

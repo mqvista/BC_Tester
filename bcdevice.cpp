@@ -72,6 +72,25 @@ bool BcDevice::openFromSerialNum(QString serialNum, quint32 baud)
     return false;
 }
 
+bool BcDevice::openFromSerialName(QString serialNum, quint32 baud)
+{
+    foreach (const QSerialPortInfo &serialPortInfo,  QSerialPortInfo::availablePorts())
+    {
+        qDebug() << "******";
+        qDebug() << serialPortInfo.portName();
+        qDebug() << serialPortInfo.manufacturer();
+        qDebug() << serialPortInfo.serialNumber();
+        qDebug() << "******";
+        if (serialPortInfo.manufacturer() == serialNum)
+        {
+            open(serialPortInfo.portName(), baud);
+            qDebug() << "GET Serial AND opened";
+            return true;
+        }
+    }
+    return false;
+}
+
 void BcDevice::close()
 {
     if (m_QSerialPort.isOpen())
@@ -83,12 +102,21 @@ void BcDevice::close()
 
 void BcDevice::rawSerialReceiveSlot()
 {
+    quint16 startLocal;
     QByteArray readAllData = m_QSerialPort.readAll();     //读取收到的数据one Byte
 
     //static QString receivedata;                         //生成 static QString变量
     m_receivePartData.clear();
     m_receivePartData.append(readAllData.data());             //将QByteArray转为QString，并保存
-    m_receiveData = m_receivePartData.mid(1, m_receivePartData.length()-3);
+    for (quint16 i=0; i<m_receivePartData.length(); i++)
+    {
+        if ((m_receivePartData.at(i) == '\r') && (m_receivePartData.at(i+1) == '\n'))
+        {
+            startLocal = i + 3;
+            break;
+        }
+    }
+    m_receiveData = m_receivePartData.mid(startLocal, m_receivePartData.length()-startLocal-2);
     qDebug() << m_receiveData;
     emit sendNewData(m_receiveData);
 }
